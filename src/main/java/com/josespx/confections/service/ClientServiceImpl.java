@@ -40,7 +40,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client findByDni(String dni) {
+    public List<Client> findByDni(String dni) {
         return this.clientDao.findByDniEquals(dni);
+    }
+
+    @Override
+    public List<Client> findByLastname(String lastName) {
+        return this.clientDao.findByLastNameContains(lastName);
     }
 }

@@ -19,5 +19,7 @@ public interface ClientService extends Dao<Client, Long> {
     @Override
     Client findById(Long id);
 
-    Client findByDni(String dni);
+    List<Client> findByDni(String dni);
+
+    List<Client> findByLastname(String lastName);
 }
