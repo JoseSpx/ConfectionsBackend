@@ -32,6 +32,16 @@ public class ClientController {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/client", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    public ResponseEntity<Client> deleteClientById(@RequestBody Long id) {
+        Client client = this.clientService.findById(id);
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        this.clientService.deleteById(id);
+        return new ResponseEntity<>(client, HttpStatus.OK);
+    }
 
 
 
