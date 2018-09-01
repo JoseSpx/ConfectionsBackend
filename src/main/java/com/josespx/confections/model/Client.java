@@ -1,6 +1,8 @@
 package com.josespx.confections.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -17,7 +19,7 @@ public class Client {
     @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "dni", nullable = false, unique = true)
+    @Column(name = "dni", unique = true)
     private String dni;
 
     @Column(name = "address")
@@ -28,6 +30,9 @@ public class Client {
 
     @Column(name = "phone2")
     private String phone2;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Measure> measureSet = new HashSet<>();
 
     public Client(){}
 
@@ -85,5 +90,13 @@ public class Client {
 
     public void setPhone2(String phone2) {
         this.phone2 = phone2;
+    }
+
+    public Set<Measure> getMeasureSet() {
+        return measureSet;
+    }
+
+    public void setMeasureSet(Set<Measure> measureSet) {
+        this.measureSet = measureSet;
     }
 }
