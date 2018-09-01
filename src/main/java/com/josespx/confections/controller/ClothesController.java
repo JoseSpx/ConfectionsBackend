@@ -64,7 +64,7 @@ public class ClothesController {
         return new ResponseEntity<>(clothesToUpdate, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/clothes/{id}")
+    @RequestMapping(value = "/clothes/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public ResponseEntity<Clothes> deleteById(@PathVariable("id") Long id) {
         Clothes clothes = this.clothesService.findById(id);
         if (clothes == null) {
