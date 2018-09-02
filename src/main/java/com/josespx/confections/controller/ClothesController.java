@@ -29,6 +29,7 @@ public class ClothesController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        clothes.setEliminated("0");
         this.clothesService.save(clothes);
         return new ResponseEntity<>(clothes, HttpStatus.OK);
     }

@@ -3,6 +3,7 @@ package com.josespx.confections.model;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +24,8 @@ public class Clothes {
     @JsonView(Clothes.Basic.class)
     private String name;
 
-    @Column(name = "eliminated", columnDefinition = "char(1) default 0")
+    @NotNull
+    @Column(name = "eliminated", columnDefinition = "char(1) default '0'")
     private String eliminated;
 
     @OneToMany(mappedBy = "clothes", fetch = FetchType.EAGER)
