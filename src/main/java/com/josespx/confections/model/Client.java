@@ -42,6 +42,9 @@ public class Client {
     @JsonView(Client.Basic.class)
     private String phone2;
 
+    @Column(name = "eliminated", columnDefinition = "char(1) default 0 ")
+    private String eliminated;
+
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Measure> measureSet = new HashSet<>();
 
@@ -101,6 +104,14 @@ public class Client {
 
     public void setPhone2(String phone2) {
         this.phone2 = phone2;
+    }
+
+    public String getEliminated() {
+        return eliminated;
+    }
+
+    public void setEliminated(String eliminated) {
+        this.eliminated = eliminated;
     }
 
     public Set<Measure> getMeasureSet() {

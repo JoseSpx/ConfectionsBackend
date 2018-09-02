@@ -40,7 +40,9 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        this.clientService.deleteById(id);
+        client.setEliminated("1");
+        this.clientService.save(client);
+        // this.clientService.deleteById(id);
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 

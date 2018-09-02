@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> findAll() {
-        return this.clientDao.findAll();
+        return this.clientDao.findAllByEliminatedEquals("0");
     }
 
     @Override
