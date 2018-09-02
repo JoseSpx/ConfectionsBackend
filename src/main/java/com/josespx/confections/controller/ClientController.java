@@ -1,5 +1,6 @@
 package com.josespx.confections.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.josespx.confections.model.Client;
 import com.josespx.confections.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api")
 public class ClientController {
@@ -66,6 +67,7 @@ public class ClientController {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
+    @JsonView(Client.Basic.class)
     @RequestMapping(value = "/clients/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<Client> findClientById(@PathVariable("id") Long id){
         Client client = this.clientService.findById(id);
@@ -76,6 +78,7 @@ public class ClientController {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
+    @JsonView(Client.Basic.class)
     @RequestMapping(value = "/clients", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<List<Client>> findAllClients(@RequestParam(value = "dni", required = false) String dni,
                                                        @RequestParam(value = "lastname", required = false) String lastname){

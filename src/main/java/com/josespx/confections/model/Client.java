@@ -1,5 +1,7 @@
 package com.josespx.confections.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,27 +10,36 @@ import java.util.Set;
 @Table(name = "client")
 public class Client {
 
+    public interface Basic {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonView(Client.Basic.class)
     private Long id;
 
     @Column(name = "name", length = 255)
+    @JsonView(Client.Basic.class)
     private String name;
 
     @Column(name = "lastname")
+    @JsonView(Client.Basic.class)
     private String lastName;
 
     @Column(name = "dni", unique = true)
+    @JsonView(Client.Basic.class)
     private String dni;
 
     @Column(name = "address")
+    @JsonView(Client.Basic.class)
     private String address;
 
     @Column(name = "phone1")
+    @JsonView(Client.Basic.class)
     private String phone1;
 
     @Column(name = "phone2")
+    @JsonView(Client.Basic.class)
     private String phone2;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)

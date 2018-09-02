@@ -31,7 +31,8 @@ public class ClothesServiceImpl implements ClothesService {
 
     @Override
     public List<Clothes> findAll() {
-        return this.clothesDao.findAll();
+        return this.clothesDao.findAllByEliminatedEquals("0");
+        // return this.clothesDao.findAll();
     }
 
     @Override

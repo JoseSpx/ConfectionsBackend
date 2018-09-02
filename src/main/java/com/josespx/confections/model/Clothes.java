@@ -1,5 +1,7 @@
 package com.josespx.confections.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -9,13 +11,20 @@ import java.util.Set;
 @Table(name = "clothes")
 public class Clothes {
 
+    public interface Basic {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonView(Clothes.Basic.class)
     private Long id;
 
     @Column(name = "name", nullable = false)
+    @JsonView(Clothes.Basic.class)
     private String name;
+
+    @Column(name = "eliminated", columnDefinition = "char(1) default 0")
+    private String eliminated;
 
     @OneToMany(mappedBy = "clothes", fetch = FetchType.EAGER)
     private Set<Measure> measureSet = new HashSet<>();
@@ -38,11 +47,19 @@ public class Clothes {
         this.name = name;
     }
 
-    public Set<Measure> getMeasureSet() {
-        return measureSet;
+    public String getEliminated() {
+        return eliminated;
     }
 
-    public void setMeasureList(Set<Measure> measureSet) {
+    public void setEliminated(String eliminated) {
+        this.eliminated = eliminated;
+    }
+
+    public void setMeasureSet(Set<Measure> measureSet) {
         this.measureSet = measureSet;
+    }
+
+    public Set<Measure> getMeasureSet() {
+        return measureSet;
     }
 }

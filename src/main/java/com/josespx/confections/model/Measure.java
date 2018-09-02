@@ -1,5 +1,7 @@
 package com.josespx.confections.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,26 +10,31 @@ import java.util.Set;
 @Table(name = "measure")
 public class Measure {
 
+    public interface Basic {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonView(Measure.Basic.class)
     private Long id;
 
     @Column(name = "title")
+    @JsonView(Measure.Basic.class)
     private String title;
 
     @Column(name = "message")
+    @JsonView(Measure.Basic.class)
     private String message;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "clothes_id")
     private Clothes clothes;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "measure_order",
             joinColumns = @JoinColumn(name = "measure_id"),

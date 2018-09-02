@@ -1,5 +1,6 @@
 package com.josespx.confections.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.josespx.confections.model.Clothes;
 import com.josespx.confections.service.ClothesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api")
 public class ClothesController {
@@ -32,6 +33,7 @@ public class ClothesController {
         return new ResponseEntity<>(clothes, HttpStatus.OK);
     }
 
+    @JsonView(Clothes.Basic.class)
     @RequestMapping(value = "/clothes/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<Clothes> findById(@PathVariable("id") Long id) {
         Clothes clothes = this.clothesService.findById(id);
@@ -42,6 +44,7 @@ public class ClothesController {
         return new ResponseEntity<>(clothes, HttpStatus.OK);
     }
 
+    @JsonView(Clothes.Basic.class)
     @RequestMapping(value = "/clothes", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<List<Clothes>> findAll() {
         List<Clothes> clothesList = this.clothesService.findAll();
@@ -52,6 +55,7 @@ public class ClothesController {
         return new ResponseEntity<>(clothesList, HttpStatus.OK);
     }
 
+    @JsonView(Clothes.Basic.class)
     @RequestMapping(value = "/clothes/{id}", method = RequestMethod.PATCH, headers = "Accept=application/json")
     public ResponseEntity<Clothes> updateClient(@PathVariable("id") Long id, @RequestBody Clothes clothes) {
         Clothes clothesToUpdate = this.clothesService.findById(id);
@@ -70,7 +74,10 @@ public class ClothesController {
         if (clothes == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        this.clothesService.deleteById(id);
+
+        clothes.setEliminated("1");
+        this.clothesService.save(clothes);
+        // this.clothesService.deleteById(id);
         return new ResponseEntity<>(clothes, HttpStatus.OK);
     }
 
