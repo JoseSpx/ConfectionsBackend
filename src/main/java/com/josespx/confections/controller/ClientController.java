@@ -29,6 +29,7 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        client.setEliminated("0");
         this.clientService.save(client);
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
