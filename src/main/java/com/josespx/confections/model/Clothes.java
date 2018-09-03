@@ -1,11 +1,10 @@
 package com.josespx.confections.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -57,6 +56,7 @@ public class Clothes {
         this.eliminated = eliminated;
     }
 
+    @JsonIgnore
     public void setMeasureSet(Set<Measure> measureSet) {
         this.measureSet = measureSet;
     }
