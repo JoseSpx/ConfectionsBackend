@@ -1,5 +1,6 @@
 package com.josespx.confections.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
@@ -123,6 +124,7 @@ public class Order {
         return client;
     }
 
+    @JsonIgnore
     public void setClient(Client client) {
         this.client = client;
     }

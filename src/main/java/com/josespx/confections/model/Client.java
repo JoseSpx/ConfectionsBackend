@@ -120,6 +120,7 @@ public class Client {
         return orderList;
     }
 
+    @JsonIgnore
     public void setOrderList(Set<Order> orderList) {
         this.orderList = orderList;
     }

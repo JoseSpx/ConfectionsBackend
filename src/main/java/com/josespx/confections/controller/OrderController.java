@@ -51,6 +51,24 @@ public class OrderController {
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/orders/{id}", method = RequestMethod.PATCH, headers = "Accept=application/json")
+    public ResponseEntity<Order> updateOrder(@PathVariable("id") Long id, @RequestBody Order order) {
+        Order orderToUpdate = this.orderService.findById(id);
+        if (orderToUpdate == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        //order.getClient().setEliminated("0");
+
+        orderToUpdate.setDateDeal(order.getDateDeal());
+        orderToUpdate.setDateDelivery(order.getDateDelivery());
+        orderToUpdate.setDateTrial(order.getDateTrial());
+        orderToUpdate.setComment(order.getComment());
+
+        this.orderService.save(orderToUpdate);
+        return new ResponseEntity<>(orderToUpdate, HttpStatus.OK);
+    }
+
 
     @PostConstruct()
     public void init() {
