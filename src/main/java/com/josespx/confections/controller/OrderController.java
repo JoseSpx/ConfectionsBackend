@@ -1,15 +1,70 @@
 package com.josespx.confections.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.josespx.confections.model.Client;
+import com.josespx.confections.model.Order;
+import com.josespx.confections.service.ClientService;
+import com.josespx.confections.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api")
 public class OrderController {
 
+    private OrderService orderService;
+    private ClientService clientService;
 
+    @Autowired
+    public OrderController(OrderService orderService, ClientService clientService) {
+        this.orderService = orderService;
+        this.clientService = clientService;
+    }
+
+    @RequestMapping(value = "/orders", method = RequestMethod.POST, headers = "Accept=application/json")
+    public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
+        this.orderService.save(order);
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    @JsonView(Order.Basic.class)
+    @RequestMapping(value = "/orders/client/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ResponseEntity<List<Order>> findAllByClientId(@PathVariable("id") Long id) {
+        List<Order> orderList = this.orderService.findAllByClientId(id);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
+    }
+
+    @JsonView(Order.Basic.class)
+    @RequestMapping(value = "/orders/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ResponseEntity<Order> findOrderById(@PathVariable("id") Long id) {
+        Order order = this.orderService.findById(id);
+        if (order == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+
+    @PostConstruct()
+    public void init() {
+        /*Client client = this.clientService.findById(1L);
+        Order order = new Order();
+        order.setClient(client);
+        order.setComment("Un pedido");
+        order.setDateDeal(LocalDate.now());
+        order.setDateDelivery(LocalDate.now());
+        order.setDateTrial(LocalDate.now());
+
+        this.orderService.save(order);
+*/
+    }
 
 
 }

@@ -1,5 +1,7 @@
 package com.josespx.confections.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,34 +12,45 @@ import java.util.Set;
 @Table(name = "orders")
 public class Order {
 
+    public interface Basic {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonView(Order.Basic.class)
     private Long id;
 
     @Column(name = "date_deal")
+    @JsonView(Order.Basic.class)
     private LocalDate dateDeal;
 
     @Column(name = "date_trial")
+    @JsonView(Order.Basic.class)
     private LocalDate dateTrial;
 
     @Column(name = "date_delivery")
+    @JsonView(Order.Basic.class)
     private LocalDate dateDelivery;
 
     @Column(name = "time_deal")
+    @JsonView(Order.Basic.class)
     private LocalTime timeDial;
 
     @Column(name = "time_trial")
+    @JsonView(Order.Basic.class)
     private LocalTime timeTrial;
 
     @Column(name = "time_delivery")
+    @JsonView(Order.Basic.class)
     private LocalTime timeDelivery;
 
     @Column(name = "comment")
+    @JsonView(Order.Basic.class)
     private String comment;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id")
+    @JsonView(Order.Basic.class)
     private Client client;
 
     public Order(){}
