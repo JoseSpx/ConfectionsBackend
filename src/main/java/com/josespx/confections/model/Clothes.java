@@ -30,7 +30,7 @@ public class Clothes {
     @OneToMany(mappedBy = "clothes", fetch = FetchType.EAGER)
     private Set<Measure> measureSet = new HashSet<>();
 
-    public Clothes() {}
+    public Clothes(){}
 
     public Long getId() {
         return id;

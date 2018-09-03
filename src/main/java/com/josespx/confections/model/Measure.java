@@ -39,13 +39,6 @@ public class Measure {
 
     private Clothes clothes;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "measure_order",
-            joinColumns = @JoinColumn(name = "measure_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private Set<Order> orderSet = new HashSet<>();
-
     public Measure (){}
 
     public Long getId() {
@@ -89,11 +82,4 @@ public class Measure {
         this.clothes = clothes;
     }
 
-    public Set<Order> getOrderSet() {
-        return orderSet;
-    }
-
-    public void setOrderSet(Set<Order> orderSet) {
-        this.orderSet = orderSet;
-    }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -46,8 +47,8 @@ public class Client {
     @Column(name = "eliminated", columnDefinition = "char(1) default 0 ")
     private String eliminated;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    private Set<Measure> measureSet = new HashSet<>();
+    @OneToMany(mappedBy = "client")
+    private Set<Order> orderList = new HashSet<>();
 
     public Client(){}
 
@@ -115,12 +116,11 @@ public class Client {
         this.eliminated = eliminated;
     }
 
-    public Set<Measure> getMeasureSet() {
-        return measureSet;
+    public Set<Order> getOrderList() {
+        return orderList;
     }
 
-    @JsonIgnore
-    public void setMeasureSet(Set<Measure> measureSet) {
-        this.measureSet = measureSet;
+    public void setOrderList(Set<Order> orderList) {
+        this.orderList = orderList;
     }
 }

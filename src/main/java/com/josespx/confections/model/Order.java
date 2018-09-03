@@ -36,8 +36,9 @@ public class Order {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToMany(mappedBy = "orderSet")
-    private Set<Measure> measureSet = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     public Order(){}
 
@@ -105,11 +106,11 @@ public class Order {
         this.comment = comment;
     }
 
-    public Set<Measure> getMeasureSet() {
-        return measureSet;
+    public Client getClient() {
+        return client;
     }
 
-    public void setMeasureSet(Set<Measure> measureSet) {
-        this.measureSet = measureSet;
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
