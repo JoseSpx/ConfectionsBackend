@@ -19,4 +19,6 @@ public interface MeasureService extends Dao<Measure, Long> {
 
     @Override
     Measure findById(Long id);
+
+    List<Measure> findAllByClientId(Long id);
 }

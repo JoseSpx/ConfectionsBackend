@@ -37,4 +37,9 @@ public class MeasureServiceImpl implements MeasureService {
     public Measure findById(Long id) {
         return this.measureDao.findById(id).orElse(null);
     }
+
+    @Override
+    public List<Measure> findAllByClientId(Long id) {
+        return this.measureDao.findAllByClientIdEquals(id);
+    }
 }

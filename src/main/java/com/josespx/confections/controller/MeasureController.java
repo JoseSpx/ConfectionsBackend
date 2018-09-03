@@ -1,6 +1,8 @@
 package com.josespx.confections.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.josespx.confections.model.Client;
+import com.josespx.confections.model.Clothes;
 import com.josespx.confections.model.Measure;
 import com.josespx.confections.service.MeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,8 @@ public class MeasureController {
         return new ResponseEntity<>(measure, HttpStatus.OK);
     }
 
-    @JsonView(Measure.Basic.class)
+
+    @JsonView(MeasureDetailFull.class)
     @RequestMapping(value = "/measures/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<Measure> findById(@PathVariable("id") Long id) {
         Measure measure = this.measureService.findById(id);
@@ -46,6 +49,15 @@ public class MeasureController {
         return new ResponseEntity<>(measureList, HttpStatus.OK);
     }
 
+    interface MeasureDetailFull extends Measure.Basic, Measure.Detail, Client.Basic, Clothes.Basic {}
+
+    @JsonView(MeasureDetailFull.class)
+    @RequestMapping(value = "/measures/client/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ResponseEntity<List<Measure>> findAllByClientId(@PathVariable("id") Long id) {
+        List<Measure> measureList = this.measureService.findAllByClientId(id);
+        return new ResponseEntity<>(measureList, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/measures/{id}", method = RequestMethod.PATCH, headers = "Accept=application/json")
     public ResponseEntity<Measure> updateMeasure(@PathVariable("id") Long id, @RequestBody Measure measure) {
         Measure measuretoUpdate = this.measureService.findById(id);
@@ -55,6 +67,7 @@ public class MeasureController {
 
         measuretoUpdate.setTitle(measure.getTitle());
         measuretoUpdate.setComment(measure.getComment());
+        measuretoUpdate.setClothes(measure.getClothes());
         this.measureService.save(measuretoUpdate);
         return new ResponseEntity<>(measuretoUpdate, HttpStatus.OK);
     }

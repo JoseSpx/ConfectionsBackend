@@ -24,8 +24,8 @@ public class Clothes {
     @JsonView(Clothes.Basic.class)
     private String name;
 
-    @NotNull
     @Column(name = "eliminated", columnDefinition = "char(1) default '0'")
+    @JsonView(Clothes.Basic.class)
     private String eliminated;
 
     @OneToMany(mappedBy = "clothes", fetch = FetchType.EAGER)

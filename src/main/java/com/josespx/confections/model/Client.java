@@ -1,5 +1,6 @@
 package com.josespx.confections.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
@@ -118,6 +119,7 @@ public class Client {
         return measureSet;
     }
 
+    @JsonIgnore
     public void setMeasureSet(Set<Measure> measureSet) {
         this.measureSet = measureSet;
     }

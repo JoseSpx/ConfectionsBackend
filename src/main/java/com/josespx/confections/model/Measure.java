@@ -1,5 +1,6 @@
 package com.josespx.confections.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class Measure {
     @JsonView(Measure.Detail.class)
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "clothes_id")
+
     private Clothes clothes;
 
     @ManyToMany(cascade = CascadeType.MERGE)
@@ -74,6 +76,7 @@ public class Measure {
         return client;
     }
 
+    @JsonIgnore
     public void setClient(Client client) {
         this.client = client;
     }
