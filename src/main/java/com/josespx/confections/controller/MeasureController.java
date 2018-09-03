@@ -54,7 +54,7 @@ public class MeasureController {
         }
 
         measuretoUpdate.setTitle(measure.getTitle());
-        measuretoUpdate.setMessage(measure.getMessage());
+        measuretoUpdate.setComment(measure.getComment());
         this.measureService.save(measuretoUpdate);
         return new ResponseEntity<>(measuretoUpdate, HttpStatus.OK);
     }

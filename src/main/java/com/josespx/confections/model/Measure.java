@@ -11,6 +11,7 @@ import java.util.Set;
 public class Measure {
 
     public interface Basic {}
+    public interface Detail {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +23,16 @@ public class Measure {
     @JsonView(Measure.Basic.class)
     private String title;
 
-    @Column(name = "message")
+    @Column(name = "comment")
     @JsonView(Measure.Basic.class)
-    private String message;
+    private String comment;
 
+    @JsonView(Measure.Detail.class)
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @JsonView(Measure.Detail.class)
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "clothes_id")
     private Clothes clothes;
@@ -59,12 +62,12 @@ public class Measure {
         this.title = title;
     }
 
-    public String getMessage() {
-        return message;
+    public String getComment() {
+        return comment;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Client getClient() {
