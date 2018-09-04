@@ -3,7 +3,6 @@ package com.josespx.confections.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.josespx.confections.model.Client;
 import com.josespx.confections.model.Order;
-import com.josespx.confections.service.ClientService;
 import com.josespx.confections.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin
@@ -76,6 +74,12 @@ public class OrderController {
 
         this.orderService.save(orderToUpdate);
         return new ResponseEntity<>(orderToUpdate, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/orders/{id}", method = RequestMethod.DELETE, headers = "Accept=aplication/json")
+    public ResponseEntity<Order> deleteOrder(@PathVariable("id") Long id) {
+        this.orderService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
