@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAll() {
-        return this.orderDao.findAll();
+        return this.orderDao.findAllByOrderByDateDealDesc();
     }
 
     @Override

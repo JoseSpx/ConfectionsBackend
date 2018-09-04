@@ -20,18 +20,27 @@ import java.util.List;
 public class OrderController {
 
     private OrderService orderService;
-    private ClientService clientService;
+    // private ClientService clientService;
 
     @Autowired
-    public OrderController(OrderService orderService, ClientService clientService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.clientService = clientService;
+        // this.clientService = clientService;
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
         this.orderService.save(order);
         return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    interface OrderDetailFull extends Order.Basic , Client.Basic {}
+
+    @JsonView(OrderDetailFull.class)
+    @RequestMapping(value = "/orders", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ResponseEntity<List<Order>> findAll() {
+        List<Order> orderList = this.orderService.findAll();
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @JsonView(Order.Basic.class)
