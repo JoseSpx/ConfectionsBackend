@@ -2,6 +2,7 @@ package com.josespx.confections.service;
 
 import com.josespx.confections.dao.Dao;
 import com.josespx.confections.model.Client;
+import com.josespx.confections.model.Clothes;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface ClientService extends Dao<Client, Long> {
     List<Client> findByDni(String dni);
 
     List<Client> findByLastname(String lastName);
+
 }

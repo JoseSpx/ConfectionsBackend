@@ -18,4 +18,6 @@ public interface ClothesService extends Dao<Clothes, Long> {
 
     @Override
     Clothes findById(Long id);
+
+
 }

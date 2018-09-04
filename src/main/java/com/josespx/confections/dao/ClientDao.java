@@ -10,4 +10,5 @@ public interface ClientDao extends JpaRepository<Client, Long> {
     List<Client> findByDniEquals(String dni);
     List<Client> findByLastNameContains(String lastName);
     List<Client> findAllByEliminatedEquals(String eliminated);
+
 }
