@@ -8,30 +8,34 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "clothes")
-public class Clothes {
+@Table(name = "type_measure")
+public class TypeMeasure {
 
     public interface Basic {}
+    public interface Detail {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonView(Clothes.Basic.class)
+    @JsonView(Basic.class)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    @JsonView(Clothes.Basic.class)
+    @Column(name = "name")
+    @JsonView(Basic.class)
     private String name;
 
-    @Column(name = "eliminated", columnDefinition = "char(1) default '0'")
-    @JsonView(Clothes.Basic.class)
+    @Column(name = "eliminated")
+    @JsonView(Basic.class)
     private String eliminated;
 
-    @OneToMany(mappedBy = "clothes", fetch = FetchType.EAGER)
-    @JsonView(Clothes.Basic.class)
-    private Set<TypeMeasure> typeMeasureSet = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "clothes_id")
+    @JsonView(Detail.class)
+    private Clothes clothes;
 
-    public Clothes(){}
+    @OneToMany(mappedBy = "typeMeasure", cascade = CascadeType.MERGE)
+    @JsonView(Detail.class)
+    private Set<Measure> measureSet = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -57,12 +61,24 @@ public class Clothes {
         this.eliminated = eliminated;
     }
 
-    public Set<TypeMeasure> getTypeMeasureSet() {
-        return typeMeasureSet;
+    public Clothes getClothes() {
+        return clothes;
     }
 
     @JsonIgnore
-    public void setTypeMeasureSet(Set<TypeMeasure> typeMeasureSet) {
-        this.typeMeasureSet = typeMeasureSet;
+    public void setClothes(Clothes clothes) {
+        this.clothes = clothes;
+    }
+
+    public Set<Measure> getMeasureSet() {
+        return measureSet;
+    }
+
+    public void setMeasureSet(Set<Measure> measureSet) {
+        this.measureSet = measureSet;
     }
 }
+
+
+
+

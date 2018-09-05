@@ -2,6 +2,7 @@ package com.josespx.confections.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.josespx.confections.model.Clothes;
+import com.josespx.confections.model.TypeMeasure;
 import com.josespx.confections.service.ClothesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,9 @@ public class ClothesController {
         return new ResponseEntity<>(clothes, HttpStatus.OK);
     }
 
-    @JsonView(Clothes.Basic.class)
+    interface ClothesDetailFull extends Clothes.Basic, TypeMeasure.Basic {}
+
+    @JsonView(ClothesDetailFull.class)
     @RequestMapping(value = "/clothes/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<Clothes> findById(@PathVariable("id") Long id) {
         Clothes clothes = this.clothesService.findById(id);

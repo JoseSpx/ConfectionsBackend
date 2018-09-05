@@ -65,9 +65,7 @@ public class MeasureController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        measuretoUpdate.setTitle(measure.getTitle());
-        measuretoUpdate.setComment(measure.getComment());
-        measuretoUpdate.setClothes(measure.getClothes());
+        measuretoUpdate.setModel(measure.getModel());
         this.measureService.save(measuretoUpdate);
         return new ResponseEntity<>(measuretoUpdate, HttpStatus.OK);
     }

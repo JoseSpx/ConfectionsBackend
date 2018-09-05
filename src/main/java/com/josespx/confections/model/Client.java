@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +19,7 @@ public class Client {
     @JsonView(Client.Basic.class)
     private Long id;
 
-    @Column(name = "name", length = 255)
+    @Column(name = "name")
     @JsonView(Client.Basic.class)
     private String name;
 
@@ -31,6 +30,10 @@ public class Client {
     @Column(name = "dni", unique = true)
     @JsonView(Client.Basic.class)
     private String dni;
+
+    @Column(name = "email")
+    @JsonView(Client.Basic.class)
+    private String email;
 
     @Column(name = "address")
     @JsonView(Client.Basic.class)
@@ -49,6 +52,9 @@ public class Client {
 
     @OneToMany(mappedBy = "client")
     private Set<Order> orderList = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.MERGE)
+    private Set<Measure> measureSet = new HashSet<>();
 
     public Client(){}
 
@@ -82,6 +88,14 @@ public class Client {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddress() {
@@ -123,5 +137,13 @@ public class Client {
     @JsonIgnore
     public void setOrderList(Set<Order> orderList) {
         this.orderList = orderList;
+    }
+
+    public Set<Measure> getMeasureSet() {
+        return measureSet;
+    }
+
+    public void setMeasureSet(Set<Measure> measureSet) {
+        this.measureSet = measureSet;
     }
 }

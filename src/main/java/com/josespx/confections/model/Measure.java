@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "measure")
@@ -20,24 +19,19 @@ public class Measure {
     @JsonView(Measure.Basic.class)
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "model")
     @JsonView(Measure.Basic.class)
-    private String title;
+    private String model;
 
-    @Column(name = "comment")
-    @JsonView(Measure.Basic.class)
-    private String comment;
-
-    @JsonView(Measure.Detail.class)
+    @JsonView(Detail.class)
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @JsonView(Measure.Detail.class)
+    @JsonView(Detail.class)
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "clothes_id")
-
-    private Clothes clothes;
+    @JoinColumn(name = "type_measure_id")
+    private TypeMeasure typeMeasure;
 
     public Measure (){}
 
@@ -49,20 +43,12 @@ public class Measure {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getModel() {
+        return model;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public Client getClient() {
@@ -74,12 +60,11 @@ public class Measure {
         this.client = client;
     }
 
-    public Clothes getClothes() {
-        return clothes;
+    public TypeMeasure getTypeMeasure() {
+        return typeMeasure;
     }
 
-    public void setClothes(Clothes clothes) {
-        this.clothes = clothes;
+    public void setTypeMeasure(TypeMeasure typeMeasure) {
+        this.typeMeasure = typeMeasure;
     }
-
 }

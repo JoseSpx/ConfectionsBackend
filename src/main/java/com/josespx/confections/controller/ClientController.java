@@ -61,6 +61,7 @@ public class ClientController {
         clientSearched.setId(client.getId());
         clientSearched.setName(client.getName());
         clientSearched.setLastName(client.getLastName());
+        clientSearched.setEmail(client.getEmail());
         clientSearched.setAddress(client.getAddress());
         clientSearched.setDni(client.getDni());
         clientSearched.setPhone1(client.getPhone1());
