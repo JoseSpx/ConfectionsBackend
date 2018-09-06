@@ -8,5 +8,4 @@ import java.util.List;
 public interface ClothesDao extends JpaRepository<Clothes, Long> {
 
     List<Clothes> findAllByEliminatedEquals(String eliminated);
-
 }

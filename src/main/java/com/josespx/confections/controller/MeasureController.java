@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.josespx.confections.model.Client;
 import com.josespx.confections.model.Clothes;
 import com.josespx.confections.model.Measure;
+import com.josespx.confections.model.TypeMeasure;
 import com.josespx.confections.service.MeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class MeasureController {
         return new ResponseEntity<>(measureList, HttpStatus.OK);
     }
 
-    interface MeasureDetailFull extends Measure.Basic, Measure.Detail, Client.Basic, Clothes.Basic {}
+    interface MeasureDetailFull extends Measure.Basic, Measure.Detail, Client.Basic {}
 
     @JsonView(MeasureDetailFull.class)
     @RequestMapping(value = "/measures/client/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -58,6 +59,17 @@ public class MeasureController {
         return new ResponseEntity<>(measureList, HttpStatus.OK);
     }
 
+    interface MeasureWithTypeMasure extends Measure.Basic, Measure.Detail, TypeMeasure.Basic {}
+
+    @JsonView(MeasureWithTypeMasure.class)
+    @RequestMapping(value = "/measures/client/{idClient}/clothes/{idClothes}", method = RequestMethod.GET, headers = "Accept=application/json")
+    public ResponseEntity<List<Measure>> findAllByClientId(@PathVariable("idClient") Long idClient, @PathVariable("idClothes") Long idClothes) {
+        List<Measure> measureList = this.measureService
+                .findAllByClientIdAndTypeMeasureClothesId(idClient, idClothes, "0", "0");
+        return new ResponseEntity<>(measureList, HttpStatus.OK);
+    }
+
+    @JsonView(Measure.Basic.class)
     @RequestMapping(value = "/measures/{id}", method = RequestMethod.PATCH, headers = "Accept=application/json")
     public ResponseEntity<Measure> updateMeasure(@PathVariable("id") Long id, @RequestBody Measure measure) {
         Measure measuretoUpdate = this.measureService.findById(id);

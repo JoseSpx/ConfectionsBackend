@@ -39,7 +39,8 @@ public class TypeMeasureServiceImpl implements TypeMeasureService {
 
     @Override
     public List<TypeMeasure> findAllByClothesId(Long id) {
-        return this.typeMeasureDao.findAllByClothes_Id(id);
+        // return this.typeMeasureDao.findAllByClothes_Id(id);
+        return this.typeMeasureDao.findAllByClothes_IdAndEliminatedEqualsOrderByNameAsc(id, "0");
     }
 
 

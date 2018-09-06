@@ -21,4 +21,6 @@ public interface MeasureService extends Dao<Measure, Long> {
     Measure findById(Long id);
 
     List<Measure> findAllByClientId(Long id);
+
+    List<Measure> findAllByClientIdAndTypeMeasureClothesId(Long idClient, Long idTypeMeasure, String e1, String e2);
 }

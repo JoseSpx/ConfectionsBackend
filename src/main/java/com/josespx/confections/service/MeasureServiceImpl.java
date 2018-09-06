@@ -42,4 +42,12 @@ public class MeasureServiceImpl implements MeasureService {
     public List<Measure> findAllByClientId(Long id) {
         return this.measureDao.findAllByClientIdEquals(id);
     }
+
+    @Override
+    public List<Measure> findAllByClientIdAndTypeMeasureClothesId(Long idClient, Long idClothes, String e1, String e2) {
+        //return this.measureDao.findAllByClientIdAndTypeMeasureClothes_IdAndTypeMeasureEliminatedAndTypeMeasureClothesEliminated
+          //      (idClient, idClothes, e1, e2);
+        return this.measureDao.findAllByClient_IdAndTypeMeasure_Clothes_IdAndTypeMeasure_EliminatedAndTypeMeasure_Clothes_Eliminated
+                (idClient, idClothes, e1, e2);
+    }
 }
