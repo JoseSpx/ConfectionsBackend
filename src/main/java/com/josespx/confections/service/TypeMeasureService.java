@@ -18,4 +18,7 @@ public interface TypeMeasureService extends Dao<TypeMeasure, Long> {
 
     @Override
     TypeMeasure findById(Long id);
+
+    List<TypeMeasure> findAllByClothesId(Long id);
+
 }
